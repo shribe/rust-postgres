@@ -177,6 +177,7 @@ fn open_socket(params: &ConnectParams) -> Result<Socket> {
     let port = params.port();
     match *params.host() {
         Host::Tcp(ref host) => {
+            println!("****** dumbass thinks it's TCP ******");
             let mut error = None;
             for addr in (&**host, port).to_socket_addrs()? {
                 let domain = match addr {
@@ -209,6 +210,7 @@ fn open_socket(params: &ConnectParams) -> Result<Socket> {
         #[cfg(unix)]
         Host::Unix(ref path) => {
             let path = path.join(&format!(".s.PGSQL.{}", port));
+            println!("****** path: {:?} ******", path);
             Ok(UnixStream::connect(&path).map(|s| unsafe {
                 Socket::from_raw_fd(s.into_raw_fd())
             })?)
