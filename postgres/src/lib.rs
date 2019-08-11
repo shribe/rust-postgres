@@ -1024,6 +1024,7 @@ impl Connection {
     where
         T: IntoConnectParams,
     {
+        println!("****** about to connect ******");
         InnerConnection::connect(params, tls).map(|conn| Connection(RefCell::new(conn)))
     }
 
