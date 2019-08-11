@@ -70,6 +70,7 @@ impl PollConnectSocket for ConnectSocket {
             .unwrap_or(&5432);
 
         match &state.config.0.host[state.idx] {
+            println!("****** dang, thinks it's a TCP host ******");
             Host::Tcp(host) => match host.parse::<IpAddr>() {
                 Ok(addr) => transition!(ConnectingTcp {
                     future: TcpStream::connect(&SocketAddr::new(addr, port)),
